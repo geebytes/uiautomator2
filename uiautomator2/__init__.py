@@ -230,7 +230,7 @@ class _BaseClient(object):
     提供最基础的控制类，这个类暂时先不公开吧
     """
 
-    def __init__(self, serial_or_url: Optional[str] = None):
+    def __init__(self, serial_or_url: Optional[str] = None, lock_dir="/data/local/tmp/.uiautomator2/filelocks/"):
         """
         Args:
             serial_or_url: device serialno or atx-agent base url
@@ -258,7 +258,7 @@ class _BaseClient(object):
         formatter = logzero.LogFormatter(fmt=log_format)
         self._logger = setup_logger(name="uiautomator2.client", level=logging.DEBUG, formatter=formatter)
         
-        filelock_path = os.path.expanduser("~/.uiautomator2/filelocks/") + base64.urlsafe_b64encode(self._serial.encode('utf-8')).decode('utf-8') + ".lock"
+        filelock_path = os.path.expanduser(lock_dir) + base64.urlsafe_b64encode(self._serial.encode('utf-8')).decode('utf-8') + ".lock"
         os.makedirs(os.path.dirname(filelock_path), exist_ok=True)
         self._filelock = filelock.FileLock(filelock_path, timeout=200)
 

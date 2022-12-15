@@ -227,7 +227,7 @@ def process_safe_wrapper(fn: typing.Callable[..., typing.Any]) -> typing.Callabl
     """
     threadsafe for process calls
     """
-    lockfile_path = os.path.expanduser("~/.uiautomator2/" + fn.__name__ + ".lock")
+    lockfile_path = os.path.expanduser("/data/local/tmp/.uiautomator2/" + fn.__name__ + ".lock")
     flock = filelock.FileLock(lockfile_path, timeout=120) # default timeout
 
     @functools.wraps(fn)
